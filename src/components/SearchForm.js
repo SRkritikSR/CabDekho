@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const SearchForm = () => {
-  const navigate=useNavigate()
-  const [mode,setMode]=useState("one-way")
+  const navigate = useNavigate()
+  const [mode, setMode] = useState("one-way")
   const [formData, setFormData] = useState({
     from: '',
     to: '',
@@ -18,7 +18,7 @@ const SearchForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -61,10 +61,10 @@ const SearchForm = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log('Form Data:', formData);
-      const finalData={...formData,mode:mode}
-      saveHistory(formData)
+      const finalData = { ...formData, mode: mode }
+      saveHistory(finalData)
       navigate('/resultPage')
-      
+
       // Here you can handle form submission (e.g., send data to server)
     }
     // Reset all states
@@ -80,62 +80,115 @@ const SearchForm = () => {
     <>
       {/* Search Box Starts */}
 
-      <section id="home" class="welcome-hero" style={{height: "75vh"}}>
-        <div class="container">
-          <div class="welcome-hero-txt">
-            <h2>Cab<span style={{color: "#fb9403"}}>Dekho</span> <br /></h2>
-            <p style={{color:"white",textTransform: 'uppercase'}}>
-              {mode} <span style={{color: "#fb9403"}}>Trip</span>
-            </p>
-          </div>
-
-          <div class="welcome-hero-form" style={{ flexBasis: "50%", flexWrap: 'wrap' }}>
-            <div class="single-welcome-hero-form">
-              <h3>From</h3>
-              <input name="from" value={formData.from} type="text" placeholder="Ex: Delhi, Mumbai, Kolkota" onChange={handleChange}/>
-              {errors.from && <p style={{color:"darkgreen"}}>{errors.from}</p>}
-              <div class="welcome-hero-form-icon">
-                <i class="flaticon-list-with-dots"></i>
-              </div>    
-            </div>
-            <div class="single-welcome-hero-form">
-              <h3>To</h3>
-              <input name="to" value={formData.to} type="text" placeholder="Ex: Kolkota, Mumbai, Delhi" onChange={handleChange}/>
-              {errors.to && <p style={{color:"darkgreen"}}>{errors.to}</p>}
-              <div class="welcome-hero-form-icon">
-                <i class="fa fa-location-pin"></i>
+      <section id="home" class="welcome-hero" style={{ height: "75vh", alignContent: "center" }}>
+      <h1 style={{color: "#fb9403",fontWeight: "bold",textTransform: "uppercase"}}>{mode}</h1>
+        <div class="container" style={{  }}>
+          {/* <SearchForm/> */}
+          <form>
+{/* 
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}>Pickup Date</span>
+                  <input class="form-control" type="date" required="" />
+                </div>
+              </div>
+              <div class="col-sm-7">
+                <div clas="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}>Hour</span>
+                      <select class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                      </select>
+                      <span class="select-arrow"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}>Min</span>
+                      <select class="form-control">
+                        <option>05</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option>35</option>
+                        <option>40</option>
+                        <option>45</option>
+                        <option>50</option>
+                        <option>55</option>
+                      </select>
+                      <span class="select-arrow"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}  >AM/PM</span>
+                      <select class="form-control">
+                        <option>AM</option>
+                        <option>PM</option>
+                      </select>
+                      <span class="select-arrow"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}>From</span>
+                  <input class="form-control" type="text"  name="from" value={formData.from} onChange={handleChange} placeholder="Where would you start" />
+                  <div class="valid-feedback" style={{fontStyle: "italic", color: "yellow",}}>{errors.from && errors.from}</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}>To</span>
+                  <input class="form-control" type="text" placeholder="What will be the end" name="to" value={formData.to} onChange={handleChange} />
+                  <div class="valid-feedback" style={{fontStyle: "italic", color: "yellow",}}>{errors.to && errors.to}</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label" style={{color: "#fb9403",fontWeight: "bold"}}  >Phone</span>
+                  <input class="form-control" type="tel" placeholder="Enter your phone number" name="phoneNum" value={formData.phoneNum} onChange={handleChange} />
+                  <div class="valid-feedback" style={{fontStyle: "italic", color: "yellow",}}>{errors.phoneNum && errors.phoneNum}</div>  
+                </div>
               </div>
             </div>
-            <div class="single-welcome-hero-form" style={{ backgroundColor: "white", justifySelf: "center" }}>
-              <h3>Phone Num</h3>
-              <input  name="phoneNum" value={formData.phoneNum} type="tel" placeholder="Enter Phone Number" autoComplete="on" required={true} onChange={handleChange}/>
-              {errors.phoneNum && <p style={{color:"darkgreen"}}>{errors.phoneNum}</p>}
-              <div class="welcome-hero-form-icon">
-                <i class="fa fa-location-pin">icon</i>
-              </div>
+            <div class="form-btn">
+              <button class="submit-btn btn-lg" style={{color: "#fb9403",fontWeight: "bold",border: "2px solid black",}} onClick={handleSubmit}>Book Now</button>
             </div>
-
-            <button class="welcome-hero-btn" style={{ display: 'flex', textDecoration: 'none' }} onClick={handleSubmit}>Search</button> <i data-feather="search"></i>
-
-
-          </div>
-
-
+          </form>
         </div>
 
       </section>
       {/* Search Box Ends */}
       {/* Selectin List Starts */}
-      <section id="list-topics" class="list-topics">
-        <div class="container">
-          <div class="list-topics-content" style={{ display: 'flex', justifyContent: 'center'}} >
+      <section id="list-topics" class="list-topics" >
+        <div class="container" style={{alignContent: "center"}}>
+          <div class="list-topics-content" style={{ display: 'flex', justifyContent: 'center' }} >
             <ul>
               <li>
                 <div class="single-list-topics-content">
                   <div class="single-list-topics-icon">
                     <i class="flaticon-restaurant"></i>
                   </div>
-                  <h2><a href="#" style={{ color: "red" }} onClick={()=> setMode("one-way")}>One Way Trip</a></h2>
+                  <h2><a href="#" style={{ color: "red" }} onClick={() => setMode("one-way")}>One Way Trip</a></h2>
                   <p>At a momemnt's notice</p>
                 </div>
               </li>
@@ -144,7 +197,7 @@ const SearchForm = () => {
                   <div class="single-list-topics-icon">
                     <i class="flaticon-travel"></i>
                   </div>
-                  <h2><a href="#" style={{ color: "red" }} onClick={()=> setMode("round-trip")}>Round Trip</a></h2>
+                  <h2><a href="#" style={{ color: "red" }} onClick={() => setMode("round-trip")}>Round Trip</a></h2>
                   <p>Comfortable and Affordable</p>
                 </div>
               </li>
@@ -153,7 +206,7 @@ const SearchForm = () => {
                   <div class="single-list-topics-icon">
                     <i class="flaticon-building"></i>
                   </div>
-                  <h2><a href="#" style={{ color: "red" }} onClick={()=> setMode("pick-up/drop at airport")}>Pick-Up/Drop at Airport</a></h2>
+                  <h2><a href="#" style={{ color: "red" }} onClick={() => setMode("pick-up/drop at airport")}>Pick-Up/Drop at Airport</a></h2>
                   <p>We are Right on Time</p>
                 </div>
               </li>
@@ -162,7 +215,7 @@ const SearchForm = () => {
                   <div class="single-list-topics-icon">
                     <i class="flaticon-pills"></i>
                   </div>
-                  <h2><a href="#" style={{ color: "red" }} onClick={()=> setMode("outstation")}>Outstation</a></h2>
+                  <h2><a href="#" style={{ color: "red" }} onClick={() => setMode("outstation")}>Outstation</a></h2>
                   <p>Fixed Rates</p>
                 </div>
               </li>
